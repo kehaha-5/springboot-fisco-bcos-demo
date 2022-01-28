@@ -3,11 +3,11 @@ springboot+fisco-bcos的学习demo
 
 # 项目使用 [Java sdk](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/index.html) [Web3SDK]((https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk.html#id13)) [fisco-bcos 2.7.2]((https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/installation.html))
 
-### sdk实例化
+## sdk实例化
 
-#### web3sdk 
+### web3sdk 
 
-##### 配置 
+#### 配置 
 
 * 参考https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/sdk/java_sdk.html#sdk 
 
@@ -47,7 +47,7 @@ springboot+fisco-bcos的学习demo
       * `ServiceConfig`用来绑定 `channel-service.group-id`，用上面生成的`groupChannelConnectionsConfig` 类来生成一个`org.fisco.bcos.channel.client.Service`类
       * 然后通过@Bean 加载到springboot的容器中，方便通过@Autowired调用 
         
-##### 实例化
+#### 实例化
 
 *  `study.fisco.demo.sdkClient.Web3JClient`
 
@@ -64,9 +64,9 @@ springboot+fisco-bcos的学习demo
 
   
 
-####  javaSdk 
+###  javaSdk 
 
-##### 配置
+#### 配置
 
 * 参考[配置说明 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/configuration.html)
 
@@ -108,7 +108,7 @@ springboot+fisco-bcos的学习demo
       }
       ```
       
-##### 实例化 
+#### 实例化 
 
   * `study.fisco.demo.sdkClient.JavaSdkClient`
   
@@ -145,9 +145,9 @@ springboot+fisco-bcos的学习demo
 
 
 
-### 加载合约
+## 加载合约
 
-#### web3sdk
+### web3sdk
 
 * 将Solidity合约文件编译为Java [控制台1.x版本 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/console/console.html#id5)https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk.html#id9)
 
@@ -165,7 +165,7 @@ springboot+fisco-bcos的学习demo
       }
   ```
 
-#### javaSdk
+### javaSdk
 
 ​	相关apiDoc [Overview (java-sdk 2.7.0 API) (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/javadoc/index.html)
 
@@ -183,11 +183,11 @@ springboot+fisco-bcos的学习demo
   }
   ```
 
-### 合约调用
+## 合约调用
 
-##### **通过solidity编译出来的java类进行合约调用**
+**通过solidity编译出来的java类进行合约调用**
 
-###### web3sdk
+### web3sdk
 
 ```java
     public Result queryAccountAmount(String account) throws Exception {
@@ -202,7 +202,7 @@ springboot+fisco-bcos的学习demo
     }
 ```
 
-###### javaSdk
+### javaSdk
 
 ```java
     public Result queryAccountAmount(String account) throws ContractException {
@@ -217,11 +217,11 @@ springboot+fisco-bcos的学习demo
     }
 ```
 
-### 合约交易解析
+## 合约交易解析
 
 **交易回执返回的类说明** [区块链功能接口列表 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#gettransactionreceipt)
 
-#### web3sdk
+### web3sdk
 
 文档 [[Web3SDK — FISCO BCOS v2.7.2 文档 ](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk.html#id13)
 
@@ -250,7 +250,7 @@ springboot+fisco-bcos的学习demo
 
 **注意如果交易返回的status不正常 可能会在解析out中会出现异常**
 
-#### javaSdk
+### javaSdk
 
 文档 [交易回执解析 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/transaction_decode.html)
 
