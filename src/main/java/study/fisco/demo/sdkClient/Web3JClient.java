@@ -42,8 +42,15 @@ public class Web3JClient {
         }
     }
 
+    //使用编译好的java对象中的load方法加载合约
     @Bean("web3jAsset")
     public Asset getAsset(Web3j web3j,Credentials credentials){
+        /*
+        * contractAddress 已经部署了的合约地址
+        * web3j 通过配置实例化出来的
+        * credentials 通过配置账户私钥创建出来的账号
+        * StaticGasProvider 配置账号gas？
+        * */
         Asset asset = Asset.load(contractAddress, web3j, credentials, new StaticGasProvider(new BigInteger("300000"), new BigInteger("300000")));
         logger.info("web3j--合约加载成功");
         return asset;

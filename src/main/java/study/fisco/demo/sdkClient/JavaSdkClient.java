@@ -59,6 +59,10 @@ public class JavaSdkClient {
 
     @Bean("javaSdkAsset")
     public Asset getAsset(Client client){
+        /*
+        * contractAddress 已经部署了的合约地址
+        * client 通过配置实例化的client
+        * */
         Asset asset = Asset.load(contractAddress, client, client.getCryptoSuite().getCryptoKeyPair());
         logger.info("JavaSdk--合约加载成功");
         return asset;

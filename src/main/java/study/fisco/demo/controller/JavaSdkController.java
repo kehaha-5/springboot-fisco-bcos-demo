@@ -31,10 +31,10 @@ public class JavaSdkController {
     public Result registerAccount(@RequestParam("account") String account,@RequestParam("amount") BigInteger amount) throws Exception {
         return javaSdkService.registerAccount(account,amount);
     }
-//
-//    @GetMapping("/transfer")
-//    public Result transfer(@RequestParam("fromAccount") String fromAccount,@RequestParam("toAccount") String toAccount,@RequestParam("amount") BigInteger amount) throws Exception {
-//        return javaSdkService.transfer(fromAccount,toAccount,amount);
-//    }
+
+    @GetMapping("/transfer")
+    public Result transfer(@RequestParam("fromAccount") String fromAccount,@RequestParam("toAccount") String toAccount,@RequestParam("amount") BigInteger amount) throws Exception {
+        return javaSdkService.transfer(fromAccount,toAccount,amount);
+    }
 
 }

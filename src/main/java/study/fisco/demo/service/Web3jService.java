@@ -37,6 +37,7 @@ public class Web3jService extends BaseService<Asset> {
     }
 
     public Result queryAccountAmount(String account) throws Exception {
+        //调用合约中的select方法
         Tuple2<BigInteger, BigInteger> select = asset.select(account).send();
         if(select.getValue1().equals(new BigInteger("-1"))){
             throw new ServiceException("账号不存在");
@@ -48,6 +49,7 @@ public class Web3jService extends BaseService<Asset> {
 
     public Result registerAccount(String account,BigInteger amount) throws Exception {
         TransactionReceipt receipt = asset.register(account, amount).send();
+        validateTransaction(receipt);
         TransactionReceiptEntity transactionReceiptEntity = parseOutAndInputRes(receipt);
         if(transactionReceiptEntity.getOut().getResult().get(0).getData().equals(new BigInteger("-1"))){
             throw new ServiceException("资产账户已存在");
@@ -60,6 +62,7 @@ public class Web3jService extends BaseService<Asset> {
 
     public Result transfer(String fromAccount,String toAccount,BigInteger amount) throws Exception {
         TransactionReceipt receipt = asset.transfer(fromAccount, toAccount, amount).send();
+        validateTransaction(receipt);
         TransactionReceiptEntity transactionReceiptEntity = parseOutAndInputRes(receipt);
 //        通过枚举类判断返回是否存在问题
         for(AssetTransferEnum itemEnum : AssetTransferEnum.values()){
@@ -67,18 +70,30 @@ public class Web3jService extends BaseService<Asset> {
                 throw new ServiceException(itemEnum.getMsg());
             }
         }
-        return Result.success(transactionReceiptEntity);
+        return Result.success();
     }
 
 
-//    解析交易放回
+//    解析交易返回
 //    https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk.html#id13
     public TransactionReceiptEntity parseOutAndInputRes(TransactionReceipt receipt) throws IOException, BaseException {
+//        通过编译出来的abi实例化解析方法
         TransactionDecoder transactionDecoder = TransactionDecoderFactory.buildTransactionDecoder(AssetContract.getAbi(),AssetContract.getBin());
         TransactionReceiptEntity transactionReceiptEntity = new TransactionReceiptEntity();
+//        解析inupt
         transactionReceiptEntity.setInput(transactionDecoder.decodeInputReturnObject(receipt.getInput()));
+//        解析out
         transactionReceiptEntity.setOut(transactionDecoder.decodeOutputReturnObject(receipt.getInput(),receipt.getOutput()));
+//        解析log（solidity中的event方法）
         transactionReceiptEntity.setLogs(transactionDecoder.decodeEventReturnObject(receipt.getLogs()));
         return transactionReceiptEntity;
+    }
+
+//    验证交易是否成功 判断交易中出现了revert指令异常，或者其他异常 主要在web3jdk中要优先验证是否出错，否者后面解析out可能会出现异常
+//    https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id3
+    public void validateTransaction(TransactionReceipt receipt) throws ServiceException{
+        if(!(receipt.getStatus().equals("0x0") || receipt.getStatus().equals(0))){
+            throw new ServiceException("交易执行错误："+receipt.getMessage());
+        }
     }
 }

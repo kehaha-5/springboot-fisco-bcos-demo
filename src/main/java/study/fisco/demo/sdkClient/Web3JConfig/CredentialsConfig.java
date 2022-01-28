@@ -13,6 +13,7 @@ public class CredentialsConfig {
 
     @Bean
     public Credentials getCredentials(){
+        //通过指定外部账户私钥使用指定的外部账户
         return Credentials.create(privateKey);
     }
 
