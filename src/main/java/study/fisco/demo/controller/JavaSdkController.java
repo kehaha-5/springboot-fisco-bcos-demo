@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import study.fisco.demo.result.Result;
+import study.fisco.demo.service.JavaSdkAccountManager;
 import study.fisco.demo.service.JavaSdkService;
 
 import java.math.BigInteger;
@@ -16,6 +17,9 @@ public class JavaSdkController {
 
     @Autowired
     private JavaSdkService javaSdkService;
+
+    @Autowired
+    private JavaSdkAccountManager javaSdkAccountManager;
 
     @GetMapping("/getBlockNumber")
     public Result getBlockNumber(){
@@ -35,6 +39,16 @@ public class JavaSdkController {
     @GetMapping("/transfer")
     public Result transfer(@RequestParam("fromAccount") String fromAccount,@RequestParam("toAccount") String toAccount,@RequestParam("amount") BigInteger amount) throws Exception {
         return javaSdkService.transfer(fromAccount,toAccount,amount);
+    }
+
+    @GetMapping("/createAccount")
+    public Result createAccount(){
+        return javaSdkAccountManager.createAccount();
+    }
+
+    @GetMapping("/loadAccount")
+    public Result loadAccount(@RequestParam("accountAddress") String accountAddress){
+        return javaSdkAccountManager.loadAccountByPemFile(accountAddress);
     }
 
 }

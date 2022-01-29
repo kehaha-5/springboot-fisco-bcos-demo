@@ -39,6 +39,7 @@ public class JavaSdkClient {
             logger.error("JavaSdk合约配置异常:{}",e.getMessage());
             throw e;
         }catch (Exception e){
+            e.printStackTrace();
             logger.error("JavaSdk实例化失败:{}",e.getMessage());
             throw e;
         }

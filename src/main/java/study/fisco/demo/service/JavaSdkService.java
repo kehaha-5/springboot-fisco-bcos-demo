@@ -70,7 +70,6 @@ public class JavaSdkService extends BaseService{
         return Result.success();
     }
 
-
     //    解析交易返回
 //    https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/transaction_decode.html
     public TransactionReceiptEntity parseRes(String fName, TransactionReceipt receipt) throws IOException, ABICodecException, TransactionException {

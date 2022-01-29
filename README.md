@@ -149,7 +149,7 @@ springboot+fisco-bcos的学习demo
 
 ### web3sdk
 
-* 将Solidity合约文件编译为Java [控制台1.x版本 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/console/console.html#id5)https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk.html#id9)
+* 将Solidity合约文件编译为Java [控制台1.x版本 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/console/console.html#id5)
 
   ```java
   //使用编译好的java对象中的load方法加载合约
@@ -276,4 +276,56 @@ springboot+fisco-bcos的学习demo
 判断文档 [区块链功能接口列表 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/latest/docs/api.html#id3)
 
 **注意如果交易返回的status不正常 解析出来的value值为null**
+
+## 账号管理
+
+### javaSdk
+
+[账户管理 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/key_tool.html#id1)****
+
+#### 生成用户和保存
+
+注意保存时**只使用了pem**
+
+文档 [账户管理 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/key_tool.html#id5)
+
+```java
+//    生成非国密账号
+    //https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/key_tool.html#id5
+    public Result createAccount(){
+//        设置为非国密
+        CryptoSuite cryptoSuite = new CryptoSuite(CryptoType.ECDSA_TYPE);
+//      随机生成非国密公私钥对
+        CryptoKeyPair keyPair = cryptoSuite.createKeyPair();
+        // 账户文件名为${accountAddress}.pem
+//        注意如果要保存在账号配置的${keyStoreDir}指定目录下要先keyPair.setConfig();设置一个config给它
+//        否者默认保存在account/ecdsa/${accountAddress}.${accountFileFormat}
+//        https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/configuration.html#id9
+        keyPair.storeKeyPairWithPemFormat();
+        return Result.success(new HashMap<String,String>(){{
+//            获取账户地址
+            put("accountAddress",keyPair.getAddress());
+        }});
+    }
+```
+
+#### 加载用户
+
+注意只使用了**加载pem文件**的方法加载用户
+
+文档[账户管理 — FISCO BCOS v2.7.2 文档 (fisco-bcos-documentation.readthedocs.io)](https://fisco-bcos-documentation.readthedocs.io/zh_CN/release-2.7.0/docs/sdk/java_sdk/key_tool.html#pem)
+
+```java
+//    加载生成的账号
+    public Result loadAccountByPemFile(String accountAddress){
+        String pemAccountFilePath = String.format("account/ecdsa/%s.pem", accountAddress);
+        // 通过client获取CryptoSuite对象
+        CryptoSuite cryptoSuite = client.getCryptoSuite();
+        // 加载pem账户文件
+        cryptoSuite.loadAccount("pem", pemAccountFilePath, null);
+        return Result.success();
+    }
+```
+
+
 
