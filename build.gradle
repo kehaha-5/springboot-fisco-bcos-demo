@@ -26,6 +26,14 @@ dependencies {
 //    旧版web3 java Jdk
     // https://mvnrepository.com/artifact/org.fisco-bcos/web3sdk
     implementation("org.fisco-bcos:web3sdk:2.6.4").exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.1.1.RELEASE'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.1.1.RELEASE'
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.1.1.RELEASE'
 }
 
 test {

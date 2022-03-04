@@ -67,7 +67,7 @@ public class JavaSdkService extends BaseService{
                 throw new ServiceException(itemEnum.getMsg());
             }
         }
-        return Result.success();
+        return Result.success(entity);
     }
 
     //    解析交易返回
