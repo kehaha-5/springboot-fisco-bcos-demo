@@ -24,8 +24,9 @@ dependencies {
 	annotationProcessor group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.1.RELEASE'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web
 	compile ('org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE')
-//    新版java Jdk
-	compile ('org.fisco-bcos.java-sdk:fisco-bcos-java-sdk:2.7.2').exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+//    旧版web3 java Jdk
+	// https://mvnrepository.com/artifact/org.fisco-bcos/web3sdk
+	implementation("org.fisco-bcos:web3sdk:2.6.4").exclude group: 'org.slf4j', module: 'slf4j-log4j12'
 }
 
 tasks.named('test') {
